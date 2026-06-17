@@ -1,0 +1,12 @@
+{
+  "workspace": [
+    "lib/cli-args-env",
+    "lib/http-error",
+    "lib/hono-error-middleware",
+    "lib/logger",
+    "lib/event-bus",
+    "lib/hono-factory-static-files-fs",
+    "hono-http-static"
+  ],
+  "nodeModulesDir": "auto"
+}

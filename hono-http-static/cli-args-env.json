@@ -1,0 +1,24 @@
+{
+  "name": "http-static",
+  "description": "Static file server",
+  "options": {
+    "port": {
+      "type": "number",
+      "description": "Port to listen on",
+      "env": "PORT",
+      "default": 8080
+    },
+    "serve-path": {
+      "type": "string",
+      "description": "Path to serve files from",
+      "env": "SERVE_PATH",
+      "default": "."
+    },
+    "log-level": {
+      "type": "string",
+      "description": "Minimum log level (debug, info, warn, error)",
+      "env": "MIN_LOG_LEVEL",
+      "default": "info"
+    }
+  }
+}

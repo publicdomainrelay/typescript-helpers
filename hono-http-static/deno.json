@@ -1,0 +1,12 @@
+{
+  "name": "@publicdomainrelay/hono-http-static",
+  "version": "0.1.0",
+  "exports": "./mod.ts",
+  "imports": {},
+  "compile": {
+    "include": ["cli-args-env.json", "config.json"]
+  },
+  "publish": {
+    "include": ["cli-args-env.json"]
+  }
+}
