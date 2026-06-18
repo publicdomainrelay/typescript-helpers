@@ -2,7 +2,12 @@
   "name": "@publicdomainrelay/hono-http-static",
   "version": "0.1.0",
   "exports": "./mod.ts",
-  "imports": {},
+  "imports": {
+    "@publicdomainrelay/cli-args-env": "jsr:@publicdomainrelay/cli-args-env@^0",
+    "@publicdomainrelay/hono-factory-static-files-fs": "jsr:@publicdomainrelay/hono-factory-static-files-fs@^0",
+    "@publicdomainrelay/logger": "jsr:@publicdomainrelay/logger@^0",
+    "@publicdomainrelay/event-bus": "jsr:@publicdomainrelay/event-bus@^0"
+  },
   "compile": {
     "include": ["cli-args-env.json", "config.json"]
   },
