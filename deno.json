@@ -6,10 +6,6 @@
     "lib/logger",
     "lib/event-bus",
     "lib/hono-factory-static-files-fs",
-    "lib/atproto-attestation-port",
-    "lib/utils-attestation-key",
-    "lib/atproto-helpers",
-    "lib/did-plc",
     "hono-http-static"
   ],
   "nodeModulesDir": "auto",
