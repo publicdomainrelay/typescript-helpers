@@ -474,6 +474,14 @@
       "npm:multiformats@^13.3.0"
     ],
     "members": {
+      "hono-http-static": {
+        "dependencies": [
+          "jsr:@publicdomainrelay/cli-args-env@0",
+          "jsr:@publicdomainrelay/event-bus@0",
+          "jsr:@publicdomainrelay/hono-factory-static-files-fs@0",
+          "jsr:@publicdomainrelay/logger@0"
+        ]
+      },
       "lib/atproto-attestation-port": {
         "dependencies": [
           "npm:@ipld/dag-cbor@^9.2.0",
