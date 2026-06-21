@@ -6,6 +6,7 @@
     "lib/logger",
     "lib/event-bus",
     "lib/hono-factory-static-files-fs",
+    "lib/hostname-helpers",
     "hono-http-static"
   ],
   "nodeModulesDir": "auto",
