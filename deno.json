@@ -4,6 +4,7 @@
     "lib/http-error",
     "lib/hono-error-middleware",
     "lib/logger",
+    "lib/serve",
     "lib/event-bus",
     "lib/hono-factory-static-files-fs",
     "lib/hostname-helpers",

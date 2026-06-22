@@ -3,7 +3,8 @@ import {
   createStaticFilesApp,
   type StaticFileEvent,
 } from "@publicdomainrelay/hono-factory-static-files-fs";
-import { createStructuredLogger, type LogLevel } from "@publicdomainrelay/logger";
+import { createLogger, getMinLogLevelFromEnv, createStructuredLogger } from "@publicdomainrelay/logger";
+import { createServe } from "@publicdomainrelay/serve";
 import { EventBus } from "@publicdomainrelay/event-bus";
 import cliArgsEnv from "./cli-args-env.json" with { type: "json" };
 
@@ -23,7 +24,7 @@ const { options } = await new Command(
 
 const servePath = options.servePath as string;
 const port = options.port as number;
-const logger = createStructuredLogger("http-static", options.logLevel as LogLevel);
+const logger = createStructuredLogger("http-static", getMinLogLevelFromEnv());
 const bus = new EventBus<StaticFileEvent>();
 
 bus.subscribe((event) => {
@@ -34,7 +35,13 @@ bus.subscribe((event) => {
 
 const app = createStaticFilesApp(servePath, logger, bus);
 
-Deno.serve(
-  { port, onListen: (addr) => logger.info(`serving ${servePath} on port ${addr.port}`) },
-  app.fetch,
-);
+const serve = createServe({ logger, tcp: { port } });
+serve.app.route("/", app as never);
+
+function shutdown() {
+  serve.shutdown();
+  Deno.exit();
+}
+Deno.addSignalListener("SIGINT", shutdown);
+Deno.addSignalListener("SIGTERM", shutdown);
+await serve.beginServe();

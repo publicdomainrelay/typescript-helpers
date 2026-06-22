@@ -208,7 +208,8 @@
           "jsr:@publicdomainrelay/cli-args-env@0",
           "jsr:@publicdomainrelay/event-bus@0",
           "jsr:@publicdomainrelay/hono-factory-static-files-fs@0",
-          "jsr:@publicdomainrelay/logger@0"
+          "jsr:@publicdomainrelay/logger@0",
+          "jsr:@publicdomainrelay/serve@0"
         ]
       },
       "lib/cli-args-env": {
@@ -228,6 +229,12 @@
           "jsr:@publicdomainrelay/event-bus@0",
           "jsr:@publicdomainrelay/hono-error-middleware@0",
           "jsr:@publicdomainrelay/http-error@0",
+          "jsr:@publicdomainrelay/logger@0"
+        ]
+      },
+      "lib/serve": {
+        "dependencies": [
+          "jsr:@hono/hono@4",
           "jsr:@publicdomainrelay/logger@0"
         ]
       }

@@ -6,7 +6,8 @@
     "@publicdomainrelay/cli-args-env": "jsr:@publicdomainrelay/cli-args-env@^0",
     "@publicdomainrelay/hono-factory-static-files-fs": "jsr:@publicdomainrelay/hono-factory-static-files-fs@^0",
     "@publicdomainrelay/logger": "jsr:@publicdomainrelay/logger@^0",
-    "@publicdomainrelay/event-bus": "jsr:@publicdomainrelay/event-bus@^0"
+    "@publicdomainrelay/event-bus": "jsr:@publicdomainrelay/event-bus@^0",
+    "@publicdomainrelay/serve": "jsr:@publicdomainrelay/serve@^0"
   },
   "compile": {
     "include": ["cli-args-env.json", "config.json"]
