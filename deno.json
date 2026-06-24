@@ -8,6 +8,9 @@
     "lib/event-bus",
     "lib/hono-factory-static-files-fs",
     "lib/hostname-helpers",
+    "lib/firehose-watcher-abc",
+    "lib/firehose-watcher-subscriberepos",
+    "lib/firehose-watcher-jetstream",
     "hono-http-static"
   ],
   "nodeModulesDir": "auto",

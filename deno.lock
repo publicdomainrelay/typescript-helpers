@@ -217,6 +217,21 @@
           "jsr:@cliffy/command@^1.0.0-rc.7"
         ]
       },
+      "lib/firehose-watcher-abc": {
+        "dependencies": [
+          "jsr:@publicdomainrelay/logger@0"
+        ]
+      },
+      "lib/firehose-watcher-jetstream": {
+        "dependencies": [
+          "jsr:@publicdomainrelay/firehose-watcher-abc@0"
+        ]
+      },
+      "lib/firehose-watcher-subscriberepos": {
+        "dependencies": [
+          "jsr:@publicdomainrelay/firehose-watcher-abc@0"
+        ]
+      },
       "lib/hono-error-middleware": {
         "dependencies": [
           "jsr:@hono/hono@4",
