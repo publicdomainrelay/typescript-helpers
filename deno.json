@@ -14,6 +14,11 @@
     "lib/firehose-watcher-abc",
     "lib/firehose-watcher-subscriberepos",
     "lib/firehose-watcher-jetstream",
+    "lib/atproto-event-stream-common",
+    "lib/abc/atproto-event-stream",
+    "lib/atproto-event-stream-relay",
+    "lib/atproto-event-stream-jetstream",
+    "lib/atproto-event-streams-client",
     "lib/compute-spa-keypair-noble",
     "lib/compute-spa-relay-client",
     "hono-http-static"
