@@ -1,10 +1,3 @@
-/**
- * compute-spa-relay-client — Browser WebSocket relay client
- *
- * Zero Deno APIs. Browser-native fetch and WebSocket only.
- * Connects to the did-key-relay dispatcher, handles nonce/registration,
- * dispatches request/response frames.
- */
 
 export const SUBSCRIBE_NSID = "com.fedproxy.temp.xrpc.subscribe";
 export const GET_NONCE_NSID = "com.fedproxy.temp.xrpc.getRegistrationNonce";
@@ -14,7 +7,7 @@ export const SUBMIT_EVENT_NSID = "com.publicdomainrelay.temp.market.submitEvent"
 interface RegisteredFrame {
   $type: string;
   subdomain: string;
-  proxyRef: string;
+  ingressRef: string;
 }
 
 interface RequestFrame {
@@ -48,22 +41,15 @@ function b64decode(s: string): Uint8Array {
   return out;
 }
 
-/**
- * Browser-side WebSocket relay client for the did-key-relay dispatcher.
- *
- * Connects to the dispatcher, registers with a signed nonce, and handles
- * bidirectional request/response frames over the subscription WebSocket.
- * Designed for browser contexts only — zero Deno APIs.
- */
 export class RelayClient {
-  #dispatcherHost: string;
+  #ingressProxyHost: string;
   #keypair: { did(): string; sign(bytes: Uint8Array): Promise<Uint8Array> };
   #serviceAuthMinter: (lxm: string) => Promise<string>;
 
   #ws: WebSocket | null = null;
   #status: string = "disconnected";
   #subdomain: string | null = null;
-  #proxyRef: string | null = null;
+  #ingressRef: string | null = null;
   #requestIdCounter = 0;
   #pendingRequests = new Map<
     string,
@@ -80,11 +66,11 @@ export class RelayClient {
   onStateChange: ((status: string) => void) | null = null;
 
   constructor(opts: {
-    dispatcherHost: string;
+    ingressProxyHost: string;
     keypair: { did(): string; sign(bytes: Uint8Array): Promise<Uint8Array> };
     serviceAuthMinter: (lxm: string) => Promise<string>;
   }) {
-    this.#dispatcherHost = opts.dispatcherHost;
+    this.#ingressProxyHost = opts.ingressProxyHost;
     this.#keypair = opts.keypair;
     this.#serviceAuthMinter = opts.serviceAuthMinter;
   }
@@ -97,8 +83,8 @@ export class RelayClient {
     return this.#subdomain;
   }
 
-  get proxyRef(): string | null {
-    return this.#proxyRef;
+  get ingressRef(): string | null {
+    return this.#ingressRef;
   }
 
   #setStatus(s: string) {
@@ -121,7 +107,7 @@ export class RelayClient {
       const did = this.#keypair.did();
 
       const url =
-        `wss://${this.#dispatcherHost}/xrpc/${SUBSCRIBE_NSID}?registration=${
+        `wss://${this.#ingressProxyHost}/xrpc/${SUBSCRIBE_NSID}?registration=${
           encodeURIComponent(registration)
         }&did=${encodeURIComponent(did)}&service_auth=${
           encodeURIComponent(subscribeToken)
@@ -159,7 +145,7 @@ export class RelayClient {
             clearTimeout(timeout);
             const f = msg as unknown as RegisteredFrame;
             this.#subdomain = f.subdomain;
-            this.#proxyRef = f.proxyRef;
+            this.#ingressRef = f.ingressRef;
             this.#setStatus("registered");
             if (!settled) {
               settled = true;
@@ -194,7 +180,7 @@ export class RelayClient {
 
         ws.onclose = () => {
           this.#subdomain = null;
-          this.#proxyRef = null;
+          this.#ingressRef = null;
           this.#setStatus("disconnected");
 
           for (const [id, p] of this.#pendingRequests) {
@@ -237,7 +223,7 @@ export class RelayClient {
     const did = this.#keypair.did();
 
     const res = await fetch(
-      `https://${this.#dispatcherHost}/xrpc/${GET_NONCE_NSID}`,
+      `https://${this.#ingressProxyHost}/xrpc/${GET_NONCE_NSID}`,
       {
         method: "POST",
         headers: {
@@ -344,7 +330,7 @@ export class RelayClient {
       this.#ws = null;
     }
     this.#subdomain = null;
-    this.#proxyRef = null;
+    this.#ingressRef = null;
     this.#setStatus("disconnected");
 
     for (const [id, p] of this.#pendingRequests) {
