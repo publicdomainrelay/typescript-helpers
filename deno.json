@@ -5,6 +5,7 @@
     "lib/hono-error-middleware",
     "lib/logger",
     "lib/serve",
+    "lib/tls-localhost",
     "lib/event-bus",
     "lib/backlog-sequencer",
     "lib/ws-reconnect",
@@ -34,7 +35,8 @@
     "multiformats/bases/base32": "npm:multiformats@^13.3.0/bases/base32",
     "@atproto/api": "npm:@atproto/api@^0.20.8",
     "@atproto/common-web": "npm:@atproto/common-web@^0.5.0",
-    "@atproto/identity": "npm:@atproto/identity@^0.5.0"
+    "@atproto/identity": "npm:@atproto/identity@^0.5.0",
+    "@peculiar/x509": "npm:@peculiar/x509@^1.12.3"
   },
   "tasks": {
     "test": "deno test --allow-env --allow-read --allow-write --allow-run test/",
