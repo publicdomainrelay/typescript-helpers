@@ -432,6 +432,11 @@
           "jsr:@publicdomainrelay/logger@0"
         ]
       },
+      "lib/market-network-fetch": {
+        "dependencies": [
+          "jsr:@publicdomainrelay/market-network-common@0"
+        ]
+      },
       "lib/serve": {
         "dependencies": [
           "jsr:@hono/hono@4",
