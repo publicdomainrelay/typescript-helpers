@@ -11,6 +11,8 @@
     "lib/ws-reconnect",
     "lib/hono-factory-static-files-fs",
     "lib/hostname-helpers",
+    "lib/common/market-network-common",
+    "lib/market-network-fetch",
     "lib/firehose-common",
     "lib/firehose-watcher-abc",
     "lib/firehose-watcher-subscriberepos",
