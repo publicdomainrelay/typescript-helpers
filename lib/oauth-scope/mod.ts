@@ -45,6 +45,8 @@ const C = {
   BIDDER_ASSOCIATION: "com.publicdomainrelay.temp.market.bidderAssociation",
   POLICY_GHA_LITE: "computer.socialweb.temp.policy.ghalite",
   POLICY_TYPESCRIPT: "computer.socialweb.temp.policy.typescript",
+  INFRA: "computer.socialweb.infra",
+  EPHEMERAL_INFRA: "computer.socialweb.ephemeralInfra",
 } as const;
 
 /** RPC endpoint scopes, already in unified `rpc:<nsid>?aud=*` form. */
@@ -78,24 +80,26 @@ const COLLECTIONS: Record<string, readonly string[]> = {
   [C.RECEIPTS_X402]: ["create", "update"],
   [C.EVENT]: ["create", "update"],
   [C.CONFIG_WIF_SIMPLE]: ["create", "update"],
-  [C.COMPUTE_VM]: ["create"],
-  [C.RFP]: ["create"],
-  [C.ACCEPT]: ["create"],
-  [C.VM_DELETE]: ["create"],
-  [C.VM_ON_NETWORK]: ["create"],
+  [C.COMPUTE_VM]: ["create", "update"],
+  [C.RFP]: ["create", "update"],
+  [C.ACCEPT]: ["create", "update"],
+  [C.VM_DELETE]: ["create", "update"],
+  [C.VM_ON_NETWORK]: ["create", "update"],
   [C.VM_TERMINATED]: ["create"],
   [C.VM_HOST_KEYS]: ["create"],
-  [C.GUEST_PUBLIC_KEY]: ["create"],
-  [C.GUEST_SIGNAL_WEBRTC]: ["create"],
+  [C.GUEST_PUBLIC_KEY]: ["create", "update"],
+  [C.GUEST_SIGNAL_WEBRTC]: ["create", "update"],
   [C.GUEST_SECRETS]: ["create", "update"],
   [C.GUEST_SECRETS_APPLIED]: ["create"],
   [C.GUEST_SECRETS_REQUESTED]: ["create"],
-  [C.BADGE_BLUE_KEYS]: ["create", "delete"],
-  [C.FEDPROXY_RBAC]: ["create", "update"],
+  [C.BADGE_BLUE_KEYS]: ["create", "update", "delete"],
+  [C.FEDPROXY_RBAC]: ["create", "update", "delete"],
   [C.FEDPROXY_SSH_PUBLIC_KEY]: ["create"],
   [C.BIDDER_ASSOCIATION]: ["create", "update"],
-  [C.POLICY_GHA_LITE]: ["create"],
-  [C.POLICY_TYPESCRIPT]: ["create"],
+  [C.POLICY_GHA_LITE]: ["create", "update"],
+  [C.POLICY_TYPESCRIPT]: ["create", "update"],
+  [C.INFRA]: ["create", "update", "delete"],
+  [C.EPHEMERAL_INFRA]: ["create", "update", "delete"],
 };
 
 /**
@@ -133,20 +137,23 @@ export function dedupeScopes(...sets: readonly (readonly string[])[]): string[] 
 }
 
 /**
- * requester (request-vm-ssh): collections/RPCs a requester writes — create only,
- * except badgeBlueKeys which the front door also deletes when a key is removed.
+ * requester: mirrors RequesterOAuthScope in socialweb-computer-kcp
+ * internal/atproto/oauth/scope.go token for token; the requester's identity check
+ * refuses a session whose granted scope lacks any of these.
  */
 export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
   ["atproto"],
   collectionScopes(
     [
       C.COMPUTE_VM, C.RFP, C.ACCEPT, C.EVENT, C.VM_DELETE, C.VM_ON_NETWORK,
-      C.FEDPROXY_RBAC, C.POLICY_GHA_LITE, C.POLICY_TYPESCRIPT,
+      C.GUEST_PUBLIC_KEY, C.GUEST_SIGNAL_WEBRTC, C.GUEST_SECRETS,
+      C.POLICY_GHA_LITE, C.POLICY_TYPESCRIPT,
     ],
-    CREATE,
+    CREATE_UPDATE,
   ),
-  [collectionScope(C.GUEST_SECRETS, CREATE_UPDATE)],
+  [collectionScope(C.FEDPROXY_RBAC, ["create", "update", "delete"])],
   [collectionScope(C.BADGE_BLUE_KEYS, ["create", "update", "delete"])],
+  collectionScopes([C.INFRA, C.EPHEMERAL_INFRA], ["create", "update", "delete"]),
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
 );
 
