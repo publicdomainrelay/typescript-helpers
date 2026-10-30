@@ -44,6 +44,7 @@ const C = {
   FEDPROXY_RBAC: "com.fedproxy.rbac",
   FEDPROXY_SSH_PUBLIC_KEY: "com.fedproxy.sshPublicKey",
   BIDDER_ASSOCIATION: "com.publicdomainrelay.temp.market.bidderAssociation",
+  ASSOCIATION: "com.publicdomainrelay.temp.market.association",
   POLICY_GHA_LITE: "computer.socialweb.temp.policy.ghalite",
   POLICY_TYPESCRIPT: "computer.socialweb.temp.policy.typescript",
   INFRA: "computer.socialweb.infra",
@@ -99,6 +100,7 @@ const COLLECTIONS: Record<string, readonly string[]> = {
   [C.FEDPROXY_RBAC]: ["create", "update", "delete"],
   [C.FEDPROXY_SSH_PUBLIC_KEY]: ["create"],
   [C.BIDDER_ASSOCIATION]: ["create", "update"],
+  [C.ASSOCIATION]: ["create", "update", "delete"],
   [C.POLICY_GHA_LITE]: ["create", "update"],
   [C.POLICY_TYPESCRIPT]: ["create", "update"],
   [C.INFRA]: ["create", "update", "delete"],
@@ -156,6 +158,7 @@ export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
   ),
   [collectionScope(C.FEDPROXY_RBAC, ["create", "update", "delete"])],
   [collectionScope(C.BADGE_BLUE_KEYS, ["create", "update", "delete"])],
+  [collectionScope(C.ASSOCIATION, ["create", "update", "delete"])],
   collectionScopes([C.INFRA, C.EPHEMERAL_INFRA], ["create", "update", "delete"]),
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
   [R.ATIRC_MINT],
@@ -177,6 +180,7 @@ export const BIDDER_OAUTH_SCOPE: string[] = dedupeScopes(
   [collectionScope(C.OFFERING, CREATE_UPDATE)],
   [collectionScope(C.HEARTBEAT, CREATE_UPDATE)],
   [collectionScope(C.BADGE_BLUE_KEYS, ["create", "update", "delete"])],
+  [collectionScope(C.ASSOCIATION, ["create", "update", "delete"])],
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
 );
 
