@@ -38,6 +38,7 @@ const C = {
   GUEST_SECRETS: "com.publicdomainrelay.temp.compute.events.guest.secrets",
   GUEST_SECRETS_APPLIED: "com.publicdomainrelay.temp.compute.events.guest.secretsApplied",
   GUEST_SECRETS_REQUESTED: "com.publicdomainrelay.temp.compute.events.guest.secretsRequested",
+  GUEST_AGENT_START: "com.publicdomainrelay.temp.compute.events.guest.agentStart",
   BADGE_BLUE_KEYS: "com.publicdomainrelay.temp.badgeBlueKeys",
   HEARTBEAT: "com.publicdomainrelay.temp.market.heartbeat",
   FEDPROXY_RBAC: "com.fedproxy.rbac",
@@ -62,6 +63,7 @@ const R = {
   CLUSTER_UP: "rpc:com.publicdomainrelay.temp.cluster.controlPlaneUp?aud=*",
   CLUSTER_DOWN: "rpc:com.publicdomainrelay.temp.cluster.controlPlaneDown?aud=*",
   CLUSTER_DELETE: "rpc:com.publicdomainrelay.temp.cluster.deleteCluster?aud=*",
+  ATIRC_MINT: "rpc:chat.atirc.mint?aud=did:web:irc.fedfork.com%23atirc",
 } as const;
 
 /**
@@ -92,6 +94,7 @@ const COLLECTIONS: Record<string, readonly string[]> = {
   [C.GUEST_SECRETS]: ["create", "update"],
   [C.GUEST_SECRETS_APPLIED]: ["create"],
   [C.GUEST_SECRETS_REQUESTED]: ["create"],
+  [C.GUEST_AGENT_START]: ["create", "update"],
   [C.BADGE_BLUE_KEYS]: ["create", "update", "delete"],
   [C.FEDPROXY_RBAC]: ["create", "update", "delete"],
   [C.FEDPROXY_SSH_PUBLIC_KEY]: ["create"],
@@ -147,7 +150,7 @@ export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
     [
       C.COMPUTE_VM, C.RFP, C.ACCEPT, C.EVENT, C.VM_DELETE, C.VM_ON_NETWORK,
       C.GUEST_PUBLIC_KEY, C.GUEST_SIGNAL_WEBRTC, C.GUEST_SECRETS,
-      C.POLICY_GHA_LITE, C.POLICY_TYPESCRIPT,
+      C.GUEST_AGENT_START, C.POLICY_GHA_LITE, C.POLICY_TYPESCRIPT,
     ],
     CREATE_UPDATE,
   ),
@@ -155,6 +158,7 @@ export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
   [collectionScope(C.BADGE_BLUE_KEYS, ["create", "update", "delete"])],
   collectionScopes([C.INFRA, C.EPHEMERAL_INFRA], ["create", "update", "delete"]),
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
+  [R.ATIRC_MINT],
 );
 
 /** bidder (hono-bidder, digitalocean-bidder): create everywhere except offering (create+update). */
