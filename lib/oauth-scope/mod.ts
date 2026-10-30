@@ -34,6 +34,7 @@ const C = {
   VM_TERMINATED: "com.publicdomainrelay.temp.compute.events.vm.terminated",
   VM_HOST_KEYS: "com.publicdomainrelay.temp.compute.events.vm.hostKeys",
   BADGE_BLUE_KEYS: "com.publicdomainrelay.temp.badgeBlueKeys",
+  HEARTBEAT: "com.publicdomainrelay.temp.market.heartbeat",
   FEDPROXY_RBAC: "com.fedproxy.rbac",
   FEDPROXY_SSH_PUBLIC_KEY: "com.fedproxy.sshPublicKey",
   BIDDER_ASSOCIATION: "com.publicdomainrelay.temp.market.bidderAssociation",
@@ -134,7 +135,7 @@ export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
     ],
     CREATE,
   ),
-  [collectionScope(C.BADGE_BLUE_KEYS, ["create", "delete"])],
+  [collectionScope(C.BADGE_BLUE_KEYS, ["create", "update", "delete"])],
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
 );
 
@@ -151,7 +152,8 @@ export const BIDDER_OAUTH_SCOPE: string[] = dedupeScopes(
     CREATE,
   ),
   [collectionScope(C.OFFERING, CREATE_UPDATE)],
-  [collectionScope(C.BADGE_BLUE_KEYS, ["create", "delete"])],
+  [collectionScope(C.HEARTBEAT, CREATE_UPDATE)],
+  [collectionScope(C.BADGE_BLUE_KEYS, ["create", "update", "delete"])],
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
 );
 
