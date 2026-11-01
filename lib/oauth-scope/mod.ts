@@ -71,6 +71,7 @@ const R = {
   CLUSTER_DOWN: "rpc:com.publicdomainrelay.temp.cluster.controlPlaneDown?aud=*",
   CLUSTER_DELETE: "rpc:com.publicdomainrelay.temp.cluster.deleteCluster?aud=*",
   ATIRC_MINT: "rpc:chat.atirc.mint?aud=did:web:irc.fedfork.com%23atirc",
+  ATIRC_REVOKE: "rpc:chat.atirc.revoke?aud=did:web:irc.fedfork.com%23atirc",
 } as const;
 
 /**
@@ -175,7 +176,7 @@ export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
   [collectionScope(C.ASSOCIATION_REQUEST, ["create", "update", "delete"])],
   collectionScopes([C.INFRA, C.EPHEMERAL_INFRA], ["create", "update", "delete"]),
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
-  [R.ATIRC_MINT],
+  [R.ATIRC_MINT, R.ATIRC_REVOKE],
 );
 
 /** bidder (hono-bidder, digitalocean-bidder): create everywhere except offering (create+update). */
