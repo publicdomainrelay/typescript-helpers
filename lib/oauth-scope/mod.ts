@@ -17,6 +17,7 @@
 /** Collection NSIDs that appear in any consumer's scope, keyed by short name. */
 const C = {
   RBAC_DID: "com.publicdomainrelay.temp.auth.allowlist.rbacDid",
+  TANGLED_VOUCH: "sh.tangled.graph.vouch",
   OFFERING: "com.publicdomainrelay.temp.market.offering",
   BID: "com.publicdomainrelay.temp.market.bid",
   BIDS_FREE: "com.publicdomainrelay.temp.market.bids.free",
@@ -177,6 +178,7 @@ export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
   collectionScopes([C.INFRA, C.EPHEMERAL_INFRA], ["create", "update", "delete"]),
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
   [R.ATIRC_MINT, R.ATIRC_REVOKE],
+  [collectionScope(C.TANGLED_VOUCH, ["create", "update"])],
 );
 
 /** bidder (hono-bidder, digitalocean-bidder): create everywhere except offering (create+update). */
