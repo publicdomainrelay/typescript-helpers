@@ -160,6 +160,20 @@ export function dedupeScopes(...sets: readonly (readonly string[])[]): string[] 
  * internal/atproto/oauth/scope.go token for token; the requester's identity check
  * refuses a session whose granted scope lacks any of these.
  */
+/** Optional requester scopes (RequesterOptionalScopes in scope.go): deletes of its own records, ingress offers, peer records. */
+export const REQUESTER_OPTIONAL_SCOPES: string[] = [
+  ...collectionScopes(
+    [
+      C.COMPUTE_VM, C.RFP, C.ACCEPT, C.EVENT, C.VM_DELETE, C.VM_ON_NETWORK,
+      C.GUEST_PUBLIC_KEY, C.GUEST_SIGNAL_WEBRTC, C.GUEST_SECRETS, C.GUEST_AGENT_START,
+      C.GUEST_SECRETS_UPDATED, C.GUEST_R2_START, C.GUEST_R2_RELEASE, C.POLICY_GHA_LITE, C.POLICY_TYPESCRIPT,
+    ],
+    ["delete"],
+  ),
+  "repo:computer.socialweb.ingress.offer?action=create&action=delete",
+  "repo:computer.socialweb.peer?action=create&action=update&action=delete",
+];
+
 export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
   ["atproto"],
   collectionScopes(
@@ -179,6 +193,7 @@ export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
   [R.ATIRC_MINT, R.ATIRC_REVOKE],
   [collectionScope(C.TANGLED_VOUCH, ["create", "update"])],
+  REQUESTER_OPTIONAL_SCOPES,
 );
 
 /** bidder (hono-bidder, digitalocean-bidder): create everywhere except offering (create+update). */
@@ -200,6 +215,7 @@ export const BIDDER_OAUTH_SCOPE: string[] = dedupeScopes(
   [collectionScope(C.BADGE_BLUE_KEYS, ["create", "update", "delete"])],
   [collectionScope(C.ASSOCIATION, ["create", "update", "delete"])],
   [R.SUBMIT_RFP, R.SUBMIT_ACCEPT, R.SUBMIT_BID, R.SUBMIT_EVENT],
+  ["repo:computer.socialweb.ingress.listen?action=create&action=update", "repo:computer.socialweb.ingress.answer?action=create&action=delete"],
 );
 
 /** desktop (hono-desktop / hono-macos-runner-desktop): create+update on its collections. */
