@@ -160,7 +160,7 @@ export function dedupeScopes(...sets: readonly (readonly string[])[]): string[] 
  * internal/atproto/oauth/scope.go token for token; the requester's identity check
  * refuses a session whose granted scope lacks any of these.
  */
-/** Optional requester scopes (RequesterOptionalScopes in scope.go): deletes of its own records, ingress offers, peer records. */
+/** Optional requester scopes (RequesterOptionalScopes in scope.go): deletes of its own records, ingress offers, peer records, the ident.link endorsement. */
 export const REQUESTER_OPTIONAL_SCOPES: string[] = [
   ...collectionScopes(
     [
@@ -172,6 +172,7 @@ export const REQUESTER_OPTIONAL_SCOPES: string[] = [
   ),
   "repo:computer.socialweb.ingress.offer?action=create&action=delete",
   "repo:computer.socialweb.peer?action=create&action=update&action=delete",
+  "repo:link.ident.endorsement?action=create&action=delete",
 ];
 
 export const REQUESTER_OAUTH_SCOPE: string[] = dedupeScopes(
